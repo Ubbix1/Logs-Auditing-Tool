@@ -1,0 +1,12 @@
+Future<Database> _initDatabase() async {
+  String path = join(await getDatabasesPath(), 'firewall_logs.db');
+  return await openDatabase(
+    path,
+    version: 1,
+    onCreate: (db, version) {
+      return db.execute(
+        'CREATE TABLE logs(id INTEGER PRIMARY KEY, ipAddress TEXT, timestamp TEXT, method TEXT, requestMethod TEXT, status TEXT, bytes TEXT, userAgent TEXT, parameters TEXT, url TEXT, responseCode INTEGER, responseSize INTEGER)',
+      );
+    },
+  );
+}
